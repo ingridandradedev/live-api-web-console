@@ -24,8 +24,8 @@
     "start-https": "HTTPS=true react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:prod": "cross-env NODE_ENV=production CI=true react-scripts build",
-    "build:docker": "cross-env CI=true GENERATE_SOURCEMAP=false react-scripts build",
+    "build:prod": "NODE_ENV=production CI=true react-scripts build",
+    "build:docker": "CI=true GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "docker:build": "docker build -t maria-streaming-console .",
@@ -61,7 +61,6 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "cross-env": "^10.0.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   },

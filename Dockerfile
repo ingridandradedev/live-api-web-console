@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install ALL dependencies (including dev dependencies for build)
-RUN npm ci
+# Install ALL dependencies (using npm install to sync lock file)
+RUN npm install
 
 # Copy source code
 COPY . .
@@ -19,7 +19,7 @@ RUN find . -name "*.test.*" -type f -delete && \
     rm -f src/setupTests.ts
 
 # Build the application for Docker
-RUN npm run build:docker
+RUN npm run build
 
 # Production stage
 FROM nginx:alpine
