@@ -24,7 +24,8 @@
     "start-https": "HTTPS=true react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:prod": "NODE_ENV=production react-scripts build",
+    "build:prod": "NODE_ENV=production CI=true react-scripts build",
+    "build:docker": "CI=true GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "docker:build": "docker build -t maria-streaming-console .",
@@ -50,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
