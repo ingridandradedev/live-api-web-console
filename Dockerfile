@@ -34,10 +34,19 @@ COPY --from=build /app/build /usr/share/nginx/html
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nextjs -u 1001
 
-# Change ownership of the nginx directories
-RUN chown -R nextjs:nodejs /var/cache/nginx && \
+# Create necessary directories and set permissions
+RUN mkdir -p /var/cache/nginx/client_temp && \
+    mkdir -p /var/cache/nginx/proxy_temp && \
+    mkdir -p /var/cache/nginx/fastcgi_temp && \
+    mkdir -p /var/cache/nginx/uwsgi_temp && \
+    mkdir -p /var/cache/nginx/scgi_temp && \
+    mkdir -p /var/run && \
+    mkdir -p /var/log/nginx && \
+    touch /var/run/nginx.pid && \
+    chown -R nextjs:nodejs /var/cache/nginx && \
+    chown -R nextjs:nodejs /var/run && \
     chown -R nextjs:nodejs /var/log/nginx && \
-    chown -R nextjs:nodejs /etc/nginx/conf.d
+    chown -R nextjs:nodejs /etc/nginx
 
 # Switch to non-root user
 USER nextjs
@@ -45,5 +54,5 @@ USER nextjs
 # Expose port 8080 (Cloud Run requirement)
 EXPOSE 8080
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start nginx with custom pid location
+CMD ["nginx", "-g", "daemon off; pid /var/run/nginx.pid;"]
