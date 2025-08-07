@@ -24,8 +24,12 @@
     "start-https": "HTTPS=true react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:prod": "NODE_ENV=production react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docker:build": "docker build -t maria-streaming-console .",
+    "docker:run": "docker run -p 8080:8080 maria-streaming-console",
+    "deploy:gcp": "gcloud builds submit --tag gcr.io/$GOOGLE_CLOUD_PROJECT/maria-streaming-console"
   },
   "eslintConfig": {
     "extends": [

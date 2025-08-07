@@ -1,0 +1,21 @@
+# Docker ignore file for Cloud Run deployment
+node_modules
+npm-debug.log
+Dockerfile
+.dockerignore
+.git
+.gitignore
+README.md
+.env
+.nyc_output
+coverage
+.nyc_output
+.coverage
+.nyc_output
+.cache
+.DS_Store
+.vscode
+.idea
+*.log
+dist
+build
