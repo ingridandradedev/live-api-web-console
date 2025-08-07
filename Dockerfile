@@ -30,23 +30,22 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copy built application from build stage
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Create a non-root user
+# Create a non-root user and set up directories
 RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nextjs -u 1001
-
-# Create necessary directories and set permissions
-RUN mkdir -p /var/cache/nginx/client_temp && \
+    adduser -S nextjs -u 1001 && \
+    mkdir -p /tmp/nginx && \
+    mkdir -p /var/cache/nginx/client_temp && \
     mkdir -p /var/cache/nginx/proxy_temp && \
     mkdir -p /var/cache/nginx/fastcgi_temp && \
     mkdir -p /var/cache/nginx/uwsgi_temp && \
     mkdir -p /var/cache/nginx/scgi_temp && \
-    mkdir -p /var/run && \
     mkdir -p /var/log/nginx && \
-    touch /var/run/nginx.pid && \
+    touch /tmp/nginx/nginx.pid && \
+    chown -R nextjs:nodejs /tmp/nginx && \
     chown -R nextjs:nodejs /var/cache/nginx && \
-    chown -R nextjs:nodejs /var/run && \
     chown -R nextjs:nodejs /var/log/nginx && \
-    chown -R nextjs:nodejs /etc/nginx
+    chown -R nextjs:nodejs /usr/share/nginx/html && \
+    chmod -R 755 /tmp/nginx
 
 # Switch to non-root user
 USER nextjs
@@ -54,5 +53,5 @@ USER nextjs
 # Expose port 8080 (Cloud Run requirement)
 EXPOSE 8080
 
-# Start nginx with custom pid location
-CMD ["nginx", "-g", "daemon off; pid /var/run/nginx.pid;"]
+# Start nginx with custom pid location in writable directory
+CMD ["nginx", "-g", "daemon off; pid /tmp/nginx/nginx.pid;"]
