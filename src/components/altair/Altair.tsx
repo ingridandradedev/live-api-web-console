@@ -48,7 +48,8 @@ function AltairComponent() {
     setConfig({
       responseModalities: [Modality.AUDIO],
       speechConfig: {
-        voiceConfig: { prebuiltVoiceConfig: { voiceName: "Aoede" } },
+        languageCode: "pt-BR",
+        voiceConfig: { prebuiltVoiceConfig: { voiceName: "Puck" } },
       },
       systemInstruction: {
         parts: [

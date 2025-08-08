@@ -39,7 +39,16 @@ export function useLiveAPI(options: LiveClientOptions): UseLiveAPIResults {
   const audioStreamerRef = useRef<AudioStreamer | null>(null);
 
   const [model, setModel] = useState<string>("models/gemini-2.0-flash-exp");
-  const [config, setConfig] = useState<LiveConnectConfig>({});
+  const [config, setConfig] = useState<LiveConnectConfig>({
+    speechConfig: {
+      languageCode: "pt-BR",
+      voiceConfig: {
+        prebuiltVoiceConfig: {
+          voiceName: "Puck",
+        },
+      },
+    },
+  });
   const [connected, setConnected] = useState(false);
   const [volume, setVolume] = useState(0);
 
